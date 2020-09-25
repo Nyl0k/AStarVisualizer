@@ -35,7 +35,7 @@ class Solver:
         return select
 
     def calcDist(self, cell1, cell2):
-        return abs(cell2.x - cell1.x)+abs(cell2.y-cell1.y)
+        return abs(cell1.x - cell2.x)+abs(cell1.y-cell2.y)
 
     def move(self):
         q = self.getLeastF()
@@ -67,10 +67,8 @@ class Solver:
             if cell in self.closedCells:
                 continue
             
-            cell.g = self.calcDist(cell, self.start)
+            cell.g = q.g + self.calcDist(cell, q)
             cell.h = self.calcDist(cell, self.goal)
-
-            f = cell.g+cell.h
             
             for openCell in self.openCells:
                 if cell == openCell and cell.g > openCell.g:
